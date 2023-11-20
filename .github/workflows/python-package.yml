@@ -15,6 +15,8 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     strategy:
       fail-fast: false
       matrix:
@@ -33,3 +35,18 @@ jobs:
     - name: Build and run
       run: |
         python niceFcknPackage/JsonHrefsDwnlder.py
+    - name: Create Release
+      id: create_release
+      uses: joutvhu/create-release@v1
+      with:
+        tag_name: v1.0.0
+        name: Release v1.0.0
+        body: |
+          Changes in this Release
+          - First Change
+          - Second Change
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
